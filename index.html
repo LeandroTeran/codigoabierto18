@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodigoAbierto</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Variables y Reset */
+        :root {
+            --primary: #6a5af9;
+            --secondary: #00c9ff;
+            --accent: #ff6b8b;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --shadow: 0 8px 24px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9ff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(106, 90, 249, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, var(--accent), #ff9a3d);
+        }
+        
+        /* Header y Navegación */
+        header {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e3eeff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(106, 90, 249, 0.1), rgba(0, 201, 255, 0.1));
+            top: -150px;
+            right: -100px;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .robot-svg {
+            width: 100%;
+            max-width: 500px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Servicios */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title span {
+            color: var(--primary);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Cursos */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .course-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .course-image {
+            height: 180px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-size: 3rem;
+        }
+        
+        .course-content {
+            padding: 25px;
+        }
+        
+        .course-tag {
+            display: inline-block;
+            background-color: rgba(106, 90, 249, 0.1);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Optimización de recursos */
+        .optimization-notice {
+            background-color: #eef7ff;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 40px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .optimization-notice h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        .btn-whatsapp {
+               display: inline-block;
+               background-color: #25D366;
+               color: white;
+               padding: 12px 20px;
+               border-radius: 30px;
+               text-decoration: none;
+               font-weight: bold;
+               font-family: Arial, sans-serif;
+               transition: background-color 0.3s ease;
+        }
+
+       .btn-whatsapp:hover {
+              background-color: #1ebe5d;
+       }
+        
+      
+      .whatsapp-float {
+          position: fixed;
+          width: 60px;
+          height: 60px;
+          bottom: 20px;
+          right: 20px;
+          background-color: #25D366;
+          border-radius: 50%;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+      }
+
+      .whatsapp-float img {
+            width: 35px;
+            height: 35px;
+      }  
+        
+      
+/*  -------------- estilo formulario ----------------- */
+.container_form {
+  width: 100%;
+  padding: 20px;
+}
+
+.card {
+  position: relative;
+  max-width: 420px;
+  margin: auto;
+  background: white;
+  border-radius: 16px;
+  padding: 40px 30px 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+h2 {
+  margin-bottom: 5px;
+  font-size: 1.6rem;
+}
+
+p {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+form input,form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  outline: none;
+  transition: border 0.3s;
+}
+
+form input:focus,form textarea:focus {
+  border-color: #4f46e5;
+}
+
+form textarea {
+  resize: none;
+  min-height: 90px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(79,70,229,0.3);
+}
+
+/* ===== SVG Neuronal ===== */
+
+.neural-bg {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 460px;
+  height: 200px;
+  opacity: 0.15;
+}
+
+.neural-bg svg {
+  width: 100%;
+  height: 100%;
+}
+
+.neural-bg line {
+  stroke: #4f46e5;
+  stroke-width: 1.2;
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.neural-bg circle {
+  fill: #4f46e5;
+  animation: nodePulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    r: 4;
+    opacity: 0.6;
+  }
+  50% {
+    r: 6;
+    opacity: 1;
+  }
+}
+/* ---- termina estilo formulario ------ */
+      
+
+/* ----- inicia estilo de seccion de talleres */
+/* TARJETA */
+.card_taller{
+  background:#ffffff;
+  width:320px;
+  padding:24px;
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.12);
+  text-align:center;
+  margin: 40px auto;/*centrar de manera horizontal*/
+}
+
+/* ROBOT */
+.robot{
+  width:140px;
+  height:90px;
+  background:#1f2933;
+  border-radius:12px;
+  margin:0 auto 20px;
+  position:relative;
+  animation:pulse 2.5s infinite ease-in-out;
+}
+
+/* OJOS */
+.eye{
+  width:16px;
+  height:16px;
+  background:#38bdf8;
+  border-radius:4px;
+  position:absolute;
+  top:28px;
+  animation:blink 4s infinite;
+}
+
+.eye.left{ left:35px; }
+.eye.right{ right:35px; }
+
+/* BOCA */
+.mouth{
+  width:40px;
+  height:6px;
+  background:#9ca3af;
+  position:absolute;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:3px;
+}
+
+/* TEXTO */
+.card_taller h2{
+  font-size:1.2rem;
+  color:#111827;
+  margin-bottom:10px;
+}
+
+.card_taller p{
+  font-size:0.95rem;
+  color:#4b5563;
+  margin-bottom:16px;
+}
+
+/* BOTÓN */
+.card_taller a{
+  display:inline-block;
+  padding:10px 18px;
+  background:#2563eb;
+  color:#fff;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:600;
+  transition:background .3s;
+}
+
+.card_taller a:hover{
+  background:#1d4ed8;
+}
+
+/* ANIMACIONES */
+@keyframes blink{
+  0%, 95%, 100%{ height:16px; }
+  97%{ height:3px; }
+}
+
+@keyframes pulse{
+  0%{ transform:scale(1); }
+  50%{ transform:scale(1.05); }
+  100%{ transform:scale(1); }
+}
+/* --- termina estilo de talleres -----*/
+      
+/* ---- inicia estilo de aportaciones voluntarias --- */
+.aportacion-oxxo {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 26px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.aportacion-oxxo h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.descripcion {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.datos-pago {
+  background: #f9f9f9;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.datos-pago h3 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 16px;
+}
+
+.datos-pago p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.cuenta {
+  margin: 10px 0;
+  padding: 12px;
+  background: #eef2f5;
+  border-radius: 10px;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.nota-ref {
+  font-size: 12px;
+  color: #777;
+  margin-top: 8px;
+}
+
+.aviso-legal {
+  border-top: 1px solid #ddd;
+  padding-top: 14px;
+}
+
+.aviso-legal h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.aviso-legal p {
+  font-size: 12px;
+  color: #666;
+}
+/* --- termina estilo de aportaciones voluntarias --- */
+
+/* ----- inicia estilo de horario de atencion  ----- */
+.horario-section {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  font-family: Arial, sans-serif;
+}
+
+.horario-card {
+  width: 300px;
+  padding: 22px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.horario-card h3 {
+  margin-bottom: 14px;
+  color: #2c3e50;
+}
+
+.dia {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 6px;
+}
+
+.hora {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.nota {
+  font-size: 12px;
+  color: #666;
+}
+/* ---- termina estilo de horario de atencion ----- */
+
+        
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-robot logo-icon"></i>
+                    CodigoAbierto18
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#cursos">Cursos</a></li>
+                    <li><a href="#talleres">Talleres</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+                
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    
+    <a href="https://wa.me/5215663950832?text=Hola,%20me%20interesa%20su%20escuela%20de%20robótica"
+        class="whatsapp-float" target="_blank">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"/>
+    </a>
+    
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Aprende programación,impresion 3d y habilidades digitales</h1>
+                    <p>CodigoAbierto es una iniciativa para acercar a niños y jovenes a generar 
+                     habilidades computacionales a una edad temprana, permitiendo  el
+                     desarrollo personal y tecnológico de la comunidad,
+                     disminuyendo la brecha tecnológica respecto a otros paises y permitiendo
+                     la competitividad.</p>
+                        
+                    <h2>¡El futuro de los jovenes se crea con código!</h2>
+                        
+                    <div class="hero-btns">
+                        <a href="#cursos" class="btn">Ver Cursos</a>
+                        
+                    <!--<a href="#contacto" class="btn btn-secondary">Inscríbete Gratis</a> -->
+                        
+                        <a href="https://wa.me/5215663950832?text=Hola,%20quiero%20más%20información" target="_blank"
+                           class="btn-whatsapp">
+                                  💬 Contáctanos por WhatsApp
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <!-- SVG optimizado en lugar de imagen -->
+                    <div class="robot-svg">
+                        <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="250" cy="200" r="150" fill="#6a5af9" opacity="0.1"/>
+                            <rect x="150" y="120" width="200" height="160" rx="20" fill="#6a5af9"/>
+                            <circle cx="200" cy="160" r="20" fill="#00c9ff"/>
+                            <circle cx="300" cy="160" r="20" fill="#00c9ff"/>
+                            
+                            <rect x="200" y="200" width="100" height="20" rx="10" fill="#ff6b8b"/>
+                            <rect x="190" y="280" width="30" height="60" rx="10" fill="#6a5af9"/>
+                            <rect x="280" y="280" width="30" height="60" rx="10" fill="#6a5af9"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios y/o catalogo-->
+    <section class="section" id="catalogo">
+        <div class="container">
+            <h2 class="section-title">Nuestro <span>Catálogo</span></h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Programación Web</h3>
+                    <p>Aprende HTML, CSS y JavaScript creando sitios web interactivos y juegos desde cero. Ideal para principiantes.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Robótica Educativa</h3>
+                    <p>Construye y programa robots con kits educativos. Desarrolla habilidades en lógica, electrónica y mecánica.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Desarrollo en Roblox</h3>
+                    <p>Crea tus propios juegos en Roblox Studio. Aprende diseño 3D, scripting con Lua y publicación de juegos.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-3dprinter"></i>
+                    </div>
+                    <h3>Impresion en 3D</h3>
+                    <p>Crea tus propias impresiones en 3D con nuestro curso de <b>ThinkerCad</b> para niños y jovenes.</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursos -->
+    <section class="section" id="cursos">
+        <div class="container">
+            <h2 class="section-title">Cursos <span>Destacados</span></h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image" style="background-color: #e3f2ff;">
+                        <i class="fas fa-code" style="color: #6a5af9;"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Principiante</span>
+                        <h3>HTML y CSS para Niños</h3>
+                        <p>Aprende las bases de la web creando páginas coloridas y animadas. Sin conocimientos previos necesarios.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> 12 sesiones</span>
+                            <span><i class="fas fa-user-friends"></i> 8-12 años</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image" style="background-color: #fff0f3;">
+                        <i class="fas fa-gamepad" style="color: #ff6b8b;"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Intermedio</span>
+                        <h3>Creación de Juegos en Roblox</h3>
+                        <p>Domina Roblox Studio y el lenguaje Lua para crear juegos increíbles y compartirlos con la comunidad.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> 16 sesiones</span>
+                            <span><i class="fas fa-user-friends"></i> 10-15 años</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image" style="background-color: #f0f7ff;">
+                        <i class="fas fa-robot" style="color: #00c9ff;"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-tag">Avanzado</span>
+                        <h3>Robótica con Arduino</h3>
+                        <p>Construye robots autónomos programables. Aprende electrónica, sensores y programación en C++.</p>
+                        <div class="course-info">
+                            <span><i class="far fa-clock"></i> 20 sesiones</span>
+                            <span><i class="fas fa-user-friends"></i> 12-16 años</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección de optimización -->
+            <div class="optimization-notice">
+                <h4>Cursos para las proximas generaciones</h4>
+                <p>Formacion de vanguardia:</p>
+                <ul>
+                    <li>Redes Neuronales orientadas a robotica</li>
+                    <li>Vision por Computadora y aplicaciones</li>
+                    <li>Impresion 3D para robots</li>
+                    <li>Integracion AI en la vida cotidiana</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    
+    <section class="aportacion-oxxo">
+  <h2>Aportación voluntaria</h2>
+
+  <p class="descripcion">
+    Si deseas apoyar el crecimiento y mantenimiento de este proyecto,
+    puedes realizar una aportación <em><b>voluntaria</b></em> mediante depósito en OXXO,
+    y/o transferencia bancaria.
+  </p>
+
+  <div class="datos-pago">
+    <h3>Datos para depósito en OXXO</h3>
+
+    <p><strong>Beneficiario:</strong>CodigoAbierto18</p>
+    <p><strong>Institución:</strong> Spin by OXXO</p>
+    <p><strong>Número de cuenta / CLABE:</strong></p>
+
+    <div class="cuenta">
+      72 8969 0001 2065 6692
+    </div>
+    
+    <p><strong>Deposíto en OXXO con codigo:</strong></p>
+              <h4>2242 1704 2110 7566</h4>
+
+    <p class="nota-ref">
+      Al realizar el depósito, conserva tu comprobante.
+    </p>
+  </div>
+
+  <div class="aviso-legal">
+    <h4>Aviso de transparencia</h4>
+    <p>
+      Las aportaciones son voluntarias y se destinan exclusivamente
+      al mantenimiento de infraestructura y crecimiento del proyecto.
+      No representan un pago por servicios ni generan beneficios económicos.
+    </p>
+  </div>
+</section>
+    
+    
+    
+    
+    
+    
+    <section id="talleres" class="talleres">
+       <div class="card_taller">
+           <div class="robot">
+                <div class="eye left"></div>
+                  <div class="eye right"></div>
+             <div class="mouth"></div>
+           </div>
+
+              <h2>Taller de PsicoEmocionalidad Tecnológica</h2>
+               <p>Aprende a gestionar emociones, pensamiento crítico y bienestar mental
+                  en un mundo impulsado por la tecnología y la IA.</p>
+
+             <a href="https://docs.google.com/forms/d/e/1FAIpQLScYsn0vZaaZjHwjZ2CzDBEMMlncSIvXOyTjo116Q_byK3K74w/viewform?usp=header" target="_blank" class="btn-form">Inscribirme</a>
+       </div>
+    </section>
+    
+    
+    
+      <section class="horario-section">
+          <div class="horario-card">
+            <h3>Horario de Atención</h3>
+
+             <p class="dia">Sábados</p>
+             <p class="hora">10:00 a.m. – 13:00 p.m.</p>
+
+             <p class="nota">
+               Atención presencial o en línea durante el horario establecido.
+               </p>
+          </div>
+       </section>
+    
+    
+    
+  
+    
+    <section id="contacto" class="contacto">
+      
+      <div class="container_form">
+                 <!-- Tarjeta -->
+           <div class="card">
+                    <!-- SVG Neuronal -->
+              <div class="neural-bg">
+                   <svg viewBox="0 0 400 200" preserveAspectRatio="none">
+                      <line x1="50" y1="100" x2="150" y2="50" />
+                      <line x1="150" y1="50" x2="250" y2="100" />
+                      <line x1="150" y1="150" x2="250" y2="100" />
+                      <circle cx="50" cy="100" r="4" />
+                      <circle cx="150" cy="50" r="4" />
+                      <circle cx="150" cy="150" r="4" />
+                      <circle cx="250" cy="100" r="4" />
+                    </svg>
+               </div>
+                    <h2>Contáctanos</h2>
+                      <p>Conecta con nuestra red de innovación 🤖</p>
+                      <!-- Formulario -->
+                <form action="https://formspree.io/f/movbpyja" method="POST">
+                  
+                  <input type="text" class="nombre_form" name="nombre" placeholder="Nombre completo" required>
+                  
+                  <input type="email" name="email" placeholder="Correo electrónico" required>
+                  <textarea name="mensaje" placeholder="Tu mensaje" required></textarea>
+                  <button type="submit">Enviar mensaje</button>
+                </form>
+          </div>
+     </div>
+    </section>
+    
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CodigoAbierto18</h3>
+                    <p>Transformamos a niños y jóvenes en creadores digitales a través de la programación, robótica y desarrollo de juegos.</p>
+                    <div class="social-links">
+                        <a href="#https://www.facebook.com/profile.php?id=61586952802871"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#https://www.instagram.com/codigoabierto18?igsh=MWU3dHZpeWo4bzFoaA=="><i class="fab fa-instagram"></i></a>
+                        <a href="#https://youtube.com/@codigoabierto-i9m?si=yYeCcyyxqPaRBwkz"><i class="fab fa-youtube"></i></a>
+                        <a href="#tiktok.com/@codigoabierto18"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#catalogo">Catalogo</a></li>
+                        <li><a href="#cursos">Cursos</a></li>
+                        <li><a href="#talleres">Talleres</a></li>
+                    </ul>
+                </div>
